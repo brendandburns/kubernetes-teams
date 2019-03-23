@@ -1,32 +1,32 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
     "manifestVersion": "1.3",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "id": "00000000-0000-0000-0000-000000000000",
-    "packageName": "com.contoso.helloworld",
+    "packageName": "com.microsoft.azure",
     "developer": {
-        "name": "Contoso",
+        "name": "Azure Kubernetes Service",
         "websiteUrl": "https://www.microsoft.com",
         "privacyUrl": "https://www.microsoft.com/privacy",
         "termsOfUseUrl": "https://www.microsoft.com/termsofuse"
     },
     "name": {
-        "short": "Hello World",
-        "full": "Hello World App for Microsoft Teams"
+        "short": "Kubernetes",
+        "full": "Kubernetes App for Microsoft Teams"
     },
     "description": {
-        "short": "Hello World App for Microsoft Teams",
-        "full": "This sample app provides a very simple app for Microsoft Teams. You can extend this to add more content and capabilities."
+        "short": "Kubernetes App for Microsoft Teams",
+        "full": "A simple app for interacting with Kubernetes from teams."
     },
     "icons": {
-        "outline": "contoso20x20.png",
-        "color": "contoso96x96.png"
+        "outline": "logo20.png",
+        "color": "logo192.png"
     },
-    "accentColor": "#60A18E",
+    "accentColor": "#326CE5",
     "staticTabs": [{
-        "entityId": "com.contoso.helloworld.hellotab",
-        "name": "Hello Tab",
-        "contentUrl": "https://yourteamsapp.ngrok.io/hello",
+        "entityId": "com.microsoft.azure.k8stab",
+        "name": "Kubernetes App",
+        "contentUrl": "https://yourteamsapp.ngrok.io/k8s",
         "scopes": [
             "personal"
         ]
@@ -47,20 +47,7 @@
             "personal"
         ]
     }],
-    "composeExtensions": [{
-        "botId": "00000000-0000-0000-0000-000000000000",
-        "commands": [{
-            "id": "getRandomText",
-            "description": "Gets some random text and images that you can insert in messages for fun.",
-            "title": "Get some random text for fun",
-            "initialRun": true,
-            "parameters": [{
-                "name": "cardTitle",
-                "description": "Card title to use",
-                "title": "Card title"
-            }]
-        }]
-    }],
+    "composeExtensions": [],
     "permissions": [],
     "validDomains": []
 }

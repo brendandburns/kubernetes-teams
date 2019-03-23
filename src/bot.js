@@ -1,38 +1,37 @@
 'use strict';
 
+const shelljs = require('shelljs');
+
 module.exports.setup = function(app) {
     var builder = require('botbuilder');
     var teams = require('botbuilder-teams');
     var config = require('config');
 
     if (!config.has("bot.appId")) {
-        // We are running locally; fix up the location of the config directory and re-intialize config
         process.env.NODE_CONFIG_DIR = "../config";
         delete require.cache[require.resolve('config')];
         config = require('config');
     }
-    // Create a connector to handle the conversations
     var connector = new teams.TeamsChatConnector({
-        // It is a bad idea to store secrets in config files. We try to read the settings from
-        // the config file (/config/default.json) OR then environment variables.
-        // See node config module (https://www.npmjs.com/package/config) on how to create config files for your Node.js environment.
         appId: config.get("bot.appId"),
         appPassword: config.get("bot.appPassword")
     });
     
-    var inMemoryBotStorage = new builder.MemoryBotStorage();
-    
-    // Define a simple bot with the above connector that echoes what it received
+    var inMemoryBotStorage = new builder.MemoryBotStorage();    
     var bot = new builder.UniversalBot(connector, function(session) {
-        // Message might contain @mentions which we would like to strip off in the response
         var text = teams.TeamsMessage.getTextWithoutMentions(session.message);
-        session.send('You said: %s', text);
+        if (text.startsWith('kubectl get') || text.startsWith('kubectl describe')) {
+            const result = shelljs.exec(`${text}`, { silent: true });
+            if (result.code == 0) {
+                session.send('```sh\n' + result.stdout + '\n```');
+            } else {
+                session.send(`Error (${result.code}): \`${result.stderr}\``);
+            }
+        } else {
+            session.send('unknown command: ' + text + 'currently supported "kubectl get ..." and "kubectl describe ..."');
+        }
     }).set('storage', inMemoryBotStorage);
 
-    // Setup an endpoint on the router for the bot to listen.
-    // NOTE: This endpoint cannot be changed and must be api/messages
     app.post('/api/messages', connector.listen());
-
-    // Export the connector for any downstream integration - e.g. registering a messaging extension
     module.exports.connector = connector;
 };

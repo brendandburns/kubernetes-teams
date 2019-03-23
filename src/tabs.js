@@ -11,12 +11,12 @@ module.exports.setup = function(app) {
     
     // Setup home page
     app.get('/', function(req, res) {
-        res.render('hello');
+        res.render('k8s');
     });
     
     // Setup the static tab
-    app.get('/hello', function(req, res) {
-        res.render('hello');
+    app.get('/k8s', function(req, res) {
+        res.render('k8s');
     });
     
     // Setup the configure tab, with first and second as content tabs

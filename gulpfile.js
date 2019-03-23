@@ -9,8 +9,8 @@ gulp.task('clean', function() {
 });
 
 gulp.task('generate-manifest', function() {
-    gulp.src(['src/static/images/contoso*', 'src/manifest.json'])
-        .pipe(zip('helloworldapp.zip'))
+    gulp.src(['src/static/images/logo*', 'src/manifest.json'])
+        .pipe(zip('kubernetes-teams-app.zip'))
         .pipe(gulp.dest('manifest'));
 });
 
